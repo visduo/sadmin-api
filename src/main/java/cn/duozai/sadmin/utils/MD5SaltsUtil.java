@@ -54,10 +54,13 @@ public class MD5SaltsUtil {
         String password = "123456";
         // 普通MD5加密密文密码
         String md5Password = SecureUtil.md5(password);
+        // 随机盐值
+        String md5Salts = salts();
         // 加盐MD5加密密文密码
-        String md5SaltsPassword = md5(password, salts());
+        String md5SaltsPassword = md5(password, md5Salts);
 
         logger.debug("密码{}的普通MD5加密密文密码为：{}", password, md5Password);
+        logger.debug("生成的随机盐值为：{}", md5Salts);
         logger.debug("密码{}的加盐MD5加密密文密码为：{}", password, md5SaltsPassword);
     }
 
