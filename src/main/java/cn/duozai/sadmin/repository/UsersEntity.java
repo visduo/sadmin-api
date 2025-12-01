@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldNameConstants;
+import org.noear.snack.annotation.ONodeAttr;
 
 /**
  * 用户表 实体类。
@@ -48,17 +49,24 @@ public class UsersEntity implements ProxyEntityAvailable<UsersEntity, UsersEntit
     /**
      * 账户密码
      */
+    @ONodeAttr(ignore = true)   // 忽略序列化
     private String password;
 
     /**
      * 账户盐值
      */
+    @ONodeAttr(ignore = true)   // 忽略序列化
     private String salts;
 
     /**
      * 真实姓名
      */
     private String realname;
+
+    /**
+     * 账户头像
+     */
+    private String avatar;
 
     /**
      * 用户备注

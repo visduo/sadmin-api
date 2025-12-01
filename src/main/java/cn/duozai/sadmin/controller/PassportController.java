@@ -3,6 +3,7 @@ package cn.duozai.sadmin.controller;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.duozai.sadmin.repository.LoginlogEntity;
 import cn.duozai.sadmin.repository.UsersEntity;
+import cn.duozai.sadmin.repository.proxy.UsersEntityProxy;
 import cn.duozai.sadmin.utils.ClientipUtil;
 import cn.duozai.sadmin.utils.MD5SaltsUtil;
 import cn.duozai.sadmin.utils.ResponseResult;
@@ -10,6 +11,7 @@ import cn.hutool.core.date.DateUtil;
 import com.easy.query.api.proxy.client.EasyEntityQuery;
 import com.easy.query.solon.annotation.Db;
 import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Get;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.annotation.Post;
 import org.noear.solon.core.handle.Context;
@@ -51,6 +53,9 @@ public class PassportController {
                     // 条件：u.username = #{username}
                     u.username().eq(username);
                 })
+                // 关联查询部门、角色实体
+                .include(UsersEntityProxy::dept)
+                .include(UsersEntityProxy::role)
                 .firstOrNull();
 
         if (usersEntity == null) {
@@ -87,6 +92,9 @@ public class PassportController {
         StpUtil.login(usersEntity.getId());
         String token = StpUtil.getTokenValue();
 
+        // 将用户对象存储在SaToken的会话Session中
+        StpUtil.getSession().set("currentUser", usersEntity);
+
         // 返回结果，并将Token返回给前端
         return ResponseResult.success("登录成功", token);
     }
@@ -103,6 +111,20 @@ public class PassportController {
         // 注销
         StpUtil.logout();
         return ResponseResult.success("注销成功", null);
+    }
+
+    /**
+     * 获取登录用户信息
+     * @visduo
+     *
+     * @return 登录用户信息实体
+     */
+    @Get
+    @Mapping("/currentUser")
+    public ResponseResult currentUser() {
+        // 获取当前登录用户对象
+        UsersEntity usersEntity = (UsersEntity) StpUtil.getSession().get("currentUser");
+        return ResponseResult.success("查询成功", usersEntity);
     }
 
 }
