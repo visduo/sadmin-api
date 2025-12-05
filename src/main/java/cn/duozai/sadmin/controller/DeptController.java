@@ -12,6 +12,7 @@ import org.noear.solon.validation.annotation.NotBlank;
 
 /**
  * 部门控制器
+ * @visduo
  */
 @Mapping("/dept")
 @Controller
@@ -113,6 +114,24 @@ public class DeptController {
                 }).executeRows();
 
         return ResponseResult.success("删除成功", null);
+    }
+
+    /**
+     * 根据部门ID获取部门信息
+     * @visduo
+     *
+     * @param id 部门ID
+     * @return 部门信息
+     */
+    @Get
+    @Mapping("/get/{id}")
+    public ResponseResult get(@Path int id) {
+        DeptEntity deptEntity = easyEntityQuery.queryable(DeptEntity.class)
+                .where(d -> {
+                    d.id().eq(id);
+                }).firstOrNull();
+
+        return ResponseResult.success("查询成功", deptEntity);
     }
 
 }
