@@ -10,6 +10,8 @@ import com.easy.query.solon.annotation.Db;
 import org.noear.solon.annotation.*;
 import org.noear.solon.validation.annotation.NotBlank;
 
+import java.util.List;
+
 /**
  * 角色控制器
  * @visduo
@@ -147,6 +149,21 @@ public class RoleController {
                 }).firstOrNull();
 
         return ResponseResult.success("查询成功", roleEntity);
+    }
+
+    /**
+     * 获取角色列表（全量）
+     * @visduo
+     *
+     * @return 角色列表
+     */
+    @Get
+    @Mapping("/optionList")
+    public ResponseResult optionList() {
+        List<RoleEntity> roleList = easyEntityQuery.queryable(RoleEntity.class)
+                .toList();
+
+        return ResponseResult.success("查询成功", roleList);
     }
 
 }

@@ -20,6 +20,7 @@ easy-query:
   ds1:  # 数据源-ds1
     database: mysql # 数据库类型设置为mysql
     print-sql: true # 打印SQL日志
+    update-strategy: only_not_null_columns # 更新策略，只更新NOT NULL的字段
 
 redis:
   rd1: # 数据源-ds1

@@ -10,6 +10,8 @@ import com.easy.query.solon.annotation.Db;
 import org.noear.solon.annotation.*;
 import org.noear.solon.validation.annotation.NotBlank;
 
+import java.util.List;
+
 /**
  * 部门控制器
  * @visduo
@@ -132,6 +134,21 @@ public class DeptController {
                 }).firstOrNull();
 
         return ResponseResult.success("查询成功", deptEntity);
+    }
+
+    /**
+     * 获取部门列表（全量）
+     * @visduo
+     *
+     * @return 部门列表
+     */
+    @Get
+    @Mapping("/optionList")
+    public ResponseResult optionList() {
+        List<DeptEntity> deptList = easyEntityQuery.queryable(DeptEntity.class)
+                .toList();
+
+        return ResponseResult.success("查询成功", deptList);
     }
 
 }
