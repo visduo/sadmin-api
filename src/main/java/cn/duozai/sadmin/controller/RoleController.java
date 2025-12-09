@@ -166,4 +166,30 @@ public class RoleController {
         return ResponseResult.success("查询成功", roleList);
     }
 
+    /**
+     * 修改角色权限
+     * @visduo
+     *
+     * @param id 角色id
+     * @param perms 授权的权限菜单列表
+     * @return 修改结果
+     */
+    @Put
+    @Mapping("/updatePerms/{id}")
+    public ResponseResult updatePerms(@Path int id,
+                                      @Param String perms) {
+        // 禁止修改ID为1的角色
+        if (id == 1) {
+            return ResponseResult.failure("默认角色禁止修改", null);
+        }
+
+        RoleEntity roleEntity = new RoleEntity();
+        roleEntity.setId(id);
+        roleEntity.setPerms(perms);
+
+        easyEntityQuery.updatable(roleEntity).executeRows();
+
+        return ResponseResult.success("修改成功", null);
+    }
+
 }
