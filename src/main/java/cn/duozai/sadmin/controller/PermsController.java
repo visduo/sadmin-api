@@ -7,6 +7,8 @@ import com.easy.query.api.proxy.client.EasyEntityQuery;
 import com.easy.query.solon.annotation.Db;
 import org.noear.solon.annotation.*;
 import org.noear.solon.validation.annotation.NotBlank;
+import org.noear.solon.validation.annotation.NotNull;
+import org.noear.solon.validation.annotation.Valid;
 
 import java.util.List;
 
@@ -14,6 +16,7 @@ import java.util.List;
  * 权限控制器
  * @visduo
  */
+@Valid
 @Mapping("/perms")
 @Controller
 public class PermsController {
@@ -66,14 +69,14 @@ public class PermsController {
      */
     @Post
     @Mapping("/add")
-    public ResponseResult add(@NotBlank(message = "父级权限ID不能为空") Integer parentId,
+    public ResponseResult add(@NotNull(message = "父级权限ID不能为空") Integer parentId,
                               @NotBlank(message = "权限名称不能为空") String name,
                               @NotBlank(message = "权限标识不能为空") String identifier,
                               @Param(required = false) String path,
                               @Param(required = false) String component,
                               @NotBlank(message = "权限类型不能为空") String type,
-                              @NotBlank(message = "排序ID不能为空") Integer sortId,
-                              @NotBlank(message = "权限状态不能为空") Integer status) {
+                              @NotNull(message = "排序ID不能为空") Integer sortId,
+                              @NotNull(message = "权限状态不能为空") Integer status) {
         PermsEntity permsEntity = new PermsEntity();
         permsEntity.setParentId(parentId);
         permsEntity.setName(name);
@@ -101,14 +104,14 @@ public class PermsController {
     @Put
     @Mapping("/update/{id}")
     public ResponseResult update(@Path int id,
-                                 @NotBlank(message = "父级权限ID不能为空") Integer parentId,
+                                 @NotNull(message = "父级权限ID不能为空") Integer parentId,
                                  @NotBlank(message = "权限名称不能为空") String name,
                                  @NotBlank(message = "权限标识不能为空") String identifier,
                                  @Param(required = false) String path,
                                  @Param(required = false) String component,
                                  @NotBlank(message = "权限类型不能为空") String type,
-                                 @NotBlank(message = "排序ID不能为空") Integer sortId,
-                                 @NotBlank(message = "权限状态不能为空") Integer status) {
+                                 @NotNull(message = "排序ID不能为空") Integer sortId,
+                                 @NotNull(message = "权限状态不能为空") Integer status) {
         PermsEntity permsEntity = new PermsEntity();
         permsEntity.setId(id);
         permsEntity.setParentId(parentId);

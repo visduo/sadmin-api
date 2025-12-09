@@ -11,6 +11,7 @@ import com.easy.query.core.api.pagination.EasyPageResult;
 import com.easy.query.solon.annotation.Db;
 import org.noear.solon.annotation.*;
 import org.noear.solon.validation.annotation.NotBlank;
+import org.noear.solon.validation.annotation.NotNull;
 
 /**
  * 用户控制器
@@ -86,13 +87,13 @@ public class UsersController {
      */
     @Post
     @Mapping("/add")
-    public ResponseResult add(@NotBlank(message = "关联部门ID不能为空") Integer deptId,
-                              @NotBlank(message = "关联角色ID不能为空") Integer roleId,
+    public ResponseResult add(@NotNull(message = "关联部门ID不能为空") Integer deptId,
+                              @NotNull(message = "关联角色ID不能为空") Integer roleId,
                               @NotBlank(message = "账户账号不能为空") String username,
                               @NotBlank(message = "账户密码不能为空") String password,
                               @NotBlank(message = "真实姓名不能为空") String realname,
                               @NotBlank(message = "用户备注不能为空") String remarks,
-                              @NotBlank(message = "账户状态不能为空") Integer status) {
+                              @NotNull(message = "账户状态不能为空") Integer status) {
         // 检查账户账号是否已存在
         long count = easyEntityQuery.queryable(UsersEntity.class)
                 .where(u -> {
@@ -139,12 +140,12 @@ public class UsersController {
     @Put
     @Mapping("/update/{id}")
     public ResponseResult update(@Path int id,
-                                 @NotBlank(message = "关联部门ID不能为空") Integer deptId,
-                                 @NotBlank(message = "关联角色ID不能为空") Integer roleId,
+                                 @NotNull(message = "关联部门ID不能为空") Integer deptId,
+                                 @NotNull(message = "关联角色ID不能为空") Integer roleId,
                                  @Param(required = false) String password,
                                  @NotBlank(message = "真实姓名不能为空") String realname,
                                  @NotBlank(message = "用户备注不能为空") String remarks,
-                                 @NotBlank(message = "账户状态不能为空") Integer status) {
+                                 @NotNull(message = "账户状态不能为空") Integer status) {
         // 禁止修改当前登录的用户
         if (StpUtil.getLoginIdAsInt() == id) {
             return ResponseResult.failure("不能修改当前登录用户", null);

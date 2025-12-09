@@ -9,6 +9,7 @@ import com.easy.query.core.api.pagination.EasyPageResult;
 import com.easy.query.solon.annotation.Db;
 import org.noear.solon.annotation.*;
 import org.noear.solon.validation.annotation.NotBlank;
+import org.noear.solon.validation.annotation.Valid;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ import java.util.List;
  * 角色控制器
  * @visduo
  */
+@Valid
 @Mapping("/role")
 @Controller
 public class RoleController {
